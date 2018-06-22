@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteRule ^login/?$ auth.php [NC,L]
+RewriteRule ^register/?$ auth.php?register=1 [NC,L]
+RewriteRule ^logout/?$ auth.php?logout=1 [NC,L]
+RewriteRule ^notes/?$ notes.php
+RewriteRule ^notes/([0-9]+)/?$ notes.php?id=$1
