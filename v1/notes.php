@@ -42,7 +42,7 @@ if(!isset($_SESSION['user'])){
 
     //create/edit notes
     if(isset($_GET['id'])) $id = intval($_GET['id']);
-    if(isset($_POST['title'])) $title = mysqli_escape_string($link, htmlspecialchars($_POST['title']));
+    if(isset($_POST['title'])) $title = mysqli_escape_string($link, $_POST['title']);
     if(isset($_POST['content'])) $content = mysqli_escape_string($link, $_POST['content']);
     $author = $_SESSION['user']['id'];
 
@@ -56,7 +56,7 @@ if(!isset($_SESSION['user'])){
 
         $query = mysqli_query($link, "UPDATE `notes` SET $query_elements_joined WHERE `id`='$id' AND `author`='$author'")
             or die(generate_error_json("internal_error"));
-
+        
         die($generic_success_json);
 
     }elseif(isset($title) && isset($content) && strlen($title) > 0 && strlen($content) > 0){
@@ -64,8 +64,12 @@ if(!isset($_SESSION['user'])){
         //add note
         $query = mysqli_query($link, "INSERT INTO `notes` (`title`, `author`, `content`) VALUES ('$title', '$author', '$content')")
             or die(generate_error_json("internal_error"));
+        $note_id = mysqli_insert_id($link);
 
-        die($generic_success_json);
+        die(json_encode([
+            "result" => "success",
+            "note_id" => $note_id
+        ]));
 
     }else{
         die(generate_error_json("insufficient_arguments"));
