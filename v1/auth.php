@@ -13,6 +13,8 @@ if(isset($_GET['register']) && isset($_POST['username']) && isset($_POST['passwo
     $username = preg_replace("/[^A-Za-z0-9._-]/", "", $_POST['username']);
     $password = crypt($_POST['password'], '$2y$07$' . $password_salt . '$');
 
+    if(strlen($username) < 3 || strlen($_POST['password']) < 3) die(generate_error_json("invalid_credentials"));
+
     $query = mysqli_query($link, "SELECT `id` FROM `users` WHERE `username`='$username'")
         or die(generate_error_json("internal_error"));
     

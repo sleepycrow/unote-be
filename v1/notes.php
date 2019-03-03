@@ -59,7 +59,7 @@ if(!isset($_SESSION['user'])){
         
         die($generic_success_json);
 
-    }elseif(isset($title) && isset($content) && strlen($title) > 0 && strlen($content) > 0){
+    }elseif(isset($title) && isset($content) && strlen(str_replace(" ", "", $title)) > 0 && strlen($content) > 0){
     
         //add note
         $query = mysqli_query($link, "INSERT INTO `notes` (`title`, `author`, `content`) VALUES ('$title', '$author', '$content')")
