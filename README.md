@@ -4,4 +4,5 @@ The backend for uNote, a note-taking PWA that works offline.
 
 ## Setup
 
-Just set the MySQL login details in `v1/incl/sql.php` and you're off to the races!
+1. Set your MySQL login details in `v1/incl/sql.php`
+2. Set the appropriate ENV in `v1/incl/headers.php`
